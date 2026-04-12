@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "DepositRecord": {
+      "title": "DepositRecord",
+      "description": "A record of a daily COD deposit",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The user ID of the owner"
+        },
+        "timestamp": {
+          "type": "number",
+          "description": "The timestamp of the deposit"
+        },
+        "expectedCOD": {
+          "type": "number",
+          "description": "The expected COD amount"
+        },
+        "actualCash": {
+          "type": "number",
+          "description": "The actual cash amount calculated"
+        },
+        "onlineAmount": {
+          "type": "number",
+          "description": "The amount paid online"
+        },
+        "dueAmount": {
+          "type": "number",
+          "description": "The amount due"
+        },
+        "notes": {
+          "type": "object",
+          "description": "A map of note denominations to their counts"
+        }
+      },
+      "required": ["uid", "timestamp", "expectedCOD", "actualCash", "onlineAmount", "dueAmount", "notes"]
+    }
+  },
+  "firestore": {
+    "/deposits/{depositId}": {
+      "schema": {
+        "$ref": "#/entities/DepositRecord"
+      },
+      "description": "Collection of all COD deposits"
+    }
+  }
+}
