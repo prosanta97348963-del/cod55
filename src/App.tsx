@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Calculator, RotateCcw, IndianRupee, Wallet, Plus, ArrowLeft, AlertCircle, History, CreditCard, Clock, CheckCircle2, Download, LogIn, LogOut } from 'lucide-react';
+import { Calculator, RotateCcw, IndianRupee, Wallet, Plus, ArrowLeft, AlertCircle, History, CreditCard, Clock, CheckCircle2, Download, LogIn, LogOut, Sun, Moon } from 'lucide-react';
 import { auth, db } from './firebase';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { collection, onSnapshot, query, addDoc, where } from 'firebase/firestore';
@@ -79,6 +79,24 @@ export default function App() {
   const [deposits, setDeposits] = useState<DepositRecord[]>([]);
   const [expectedCOD, setExpectedCOD] = useState<number | ''>('');
   const [showModal, setShowModal] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved === 'dark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   const [notes, setNotes] = useState<Record<number, number>>(
     DENOMINATIONS.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})
@@ -223,26 +241,36 @@ export default function App() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-slate-50 to-fuchsia-50 flex items-center justify-center p-3 sm:p-4 font-sans relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-slate-50 to-fuchsia-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 flex items-center justify-center p-3 sm:p-4 font-sans relative overflow-hidden transition-colors duration-500">
+        <div className="absolute top-4 right-4 z-50">
+          <button 
+            onClick={() => setIsDarkMode(!isDarkMode)} 
+            className="p-3 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-full shadow-sm text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 transition-all border border-white/60 dark:border-slate-700/50"
+            title="Toggle Theme"
+          >
+            {isDarkMode ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-indigo-600" />}
+          </button>
+        </div>
 
-        <div className="bg-white/70 backdrop-blur-2xl p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_8px_32px_rgb(0,0,0,0.04)] border border-white/80 w-[95%] max-w-md text-center relative z-10 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)] transition-all duration-500">
-          <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gradient-to-tr from-indigo-600 to-fuchsia-600 text-white rounded-[1.25rem] sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-xl shadow-indigo-500/30 transform -rotate-6 transition-transform hover:rotate-0 duration-300">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-300 dark:bg-indigo-900/40 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 animate-blob transition-colors duration-500"></div>
+        <div className="absolute top-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-fuchsia-300 dark:bg-fuchsia-900/40 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 animate-blob transition-colors duration-500"></div>
+
+        <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_8px_32px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.2)] border border-white/80 dark:border-slate-700/50 w-[95%] max-w-md text-center relative z-10 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_8px_40px_rgba(0,0,0,0.3)] transition-all duration-500">
+          <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gradient-to-tr from-indigo-600 to-fuchsia-600 dark:from-indigo-500 dark:to-fuchsia-500 text-white rounded-[1.25rem] sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-xl shadow-indigo-500/30 transform -rotate-6 transition-transform hover:rotate-0 duration-300">
             <Wallet size={32} className="transform rotate-6 sm:w-9 sm:h-9" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 mb-2 sm:mb-3 tracking-tight">cod<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">55</span></h1>
-          <p className="text-slate-500 mb-8 sm:mb-10 text-base sm:text-lg leading-relaxed font-medium">Sign in to securely manage your daily cash deposits in the cloud.</p>
+          <h1 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 dark:text-white mb-2 sm:mb-3 tracking-tight">cod<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600 dark:from-indigo-400 dark:to-fuchsia-400">55</span></h1>
+          <p className="text-slate-500 dark:text-slate-400 mb-8 sm:mb-10 text-base sm:text-lg leading-relaxed font-medium">Sign in to securely manage your daily cash deposits in the cloud.</p>
           <button 
             onClick={handleLogin}
-            className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:from-slate-800 hover:to-slate-700 flex items-center justify-center gap-3 shadow-lg shadow-slate-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0 duration-300"
+            className="w-full bg-gradient-to-r from-slate-900 to-slate-800 dark:from-indigo-600 dark:to-fuchsia-600 text-white px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:from-slate-800 hover:to-slate-700 dark:hover:from-indigo-500 dark:hover:to-fuchsia-500 flex items-center justify-center gap-3 shadow-lg shadow-slate-900/20 dark:shadow-indigo-500/20 transition-all hover:-translate-y-0.5 active:translate-y-0 duration-300"
           >
             <LogIn size={20} />
             Continue with Google
           </button>
         </div>
-        <div className="absolute bottom-4 sm:bottom-6 text-xs sm:text-sm text-slate-400 font-medium tracking-wide">
+        <div className="absolute bottom-4 sm:bottom-6 text-xs sm:text-sm text-slate-400 dark:text-slate-500 font-medium tracking-wide">
           made by ashistyz
         </div>
       </div>
@@ -575,11 +603,21 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 via-slate-50 to-fuchsia-50 text-slate-900 font-sans p-3 sm:p-4 md:p-8 flex justify-center items-start overflow-x-hidden relative">
-      <div className="fixed top-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-indigo-300/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-60 pointer-events-none"></div>
-      <div className="fixed top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-fuchsia-300/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-60 pointer-events-none"></div>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 via-slate-50 to-fuchsia-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 text-slate-900 dark:text-slate-100 font-sans p-3 sm:p-4 md:p-8 flex justify-center items-start overflow-x-hidden relative transition-colors duration-500">
+      <div className="fixed top-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-indigo-300/30 dark:bg-indigo-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] md:blur-[100px] opacity-60 pointer-events-none transition-colors duration-500"></div>
+      <div className="fixed top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-fuchsia-300/30 dark:bg-fuchsia-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] md:blur-[100px] opacity-60 pointer-events-none transition-colors duration-500"></div>
       
-        <div className="w-full max-w-7xl mx-auto relative z-10">
+      <div className="fixed top-4 right-4 sm:top-6 sm:right-8 z-50">
+        <button 
+          onClick={() => setIsDarkMode(!isDarkMode)} 
+          className="p-3 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-full shadow-sm text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 transition-all border border-white/60 dark:border-slate-700/50"
+          title="Toggle Theme"
+        >
+          {isDarkMode ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-indigo-600" />}
+        </button>
+      </div>
+
+      <div className="w-full max-w-7xl mx-auto relative z-10 pt-10 sm:pt-4">
           {view === 'dashboard' && renderDashboard()}
           {view === 'enter_cod' && renderEnterCOD()}
           {view === 'calculator' && renderCalculator()}
