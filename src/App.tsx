@@ -218,58 +218,74 @@ export default function App() {
   };
 
   if (!isAuthReady) {
-    return <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen bg-[#f8f9fa] dark:bg-slate-950 flex items-center justify-center">Loading...</div>;
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center p-4">
-        <div className="bg-white p-8 rounded-3xl shadow-xl max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Wallet size={32} />
+      <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-slate-50 to-fuchsia-50 flex items-center justify-center p-3 sm:p-4 font-sans relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+
+        <div className="bg-white/70 backdrop-blur-2xl p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_8px_32px_rgb(0,0,0,0.04)] border border-white/80 w-[95%] max-w-md text-center relative z-10 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)] transition-all duration-500">
+          <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gradient-to-tr from-indigo-600 to-fuchsia-600 text-white rounded-[1.25rem] sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-xl shadow-indigo-500/30 transform -rotate-6 transition-transform hover:rotate-0 duration-300">
+            <Wallet size={32} className="transform rotate-6 sm:w-9 sm:h-9" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">COD Management</h1>
-          <p className="text-gray-500 mb-8">Sign in to track your daily cash deposits securely in the cloud.</p>
+          <h1 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 mb-2 sm:mb-3 tracking-tight">cod<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">55</span></h1>
+          <p className="text-slate-500 mb-8 sm:mb-10 text-base sm:text-lg leading-relaxed font-medium">Sign in to securely manage your daily cash deposits in the cloud.</p>
           <button 
             onClick={handleLogin}
-            className="w-full bg-blue-600 text-white px-6 py-4 rounded-2xl font-semibold hover:bg-blue-700 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 transition-all active:scale-95"
+            className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:from-slate-800 hover:to-slate-700 flex items-center justify-center gap-3 shadow-lg shadow-slate-900/20 transition-all hover:-translate-y-0.5 active:translate-y-0 duration-300"
           >
             <LogIn size={20} />
-            Sign in with Google
+            Continue with Google
           </button>
+        </div>
+        <div className="absolute bottom-4 sm:bottom-6 text-xs sm:text-sm text-slate-400 font-medium tracking-wide">
+          made by ashistyz
         </div>
       </div>
     );
   }
 
   const renderDashboard = () => (
-    <div className="max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">COD Management</h1>
-          <p className="text-gray-500 mt-1">Track your daily cash deposits</p>
+    <div className="max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12 relative min-h-screen pt-2 sm:pt-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-12">
+        <div className="relative group">
+          <h1 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight flex items-baseline gap-1">
+            cod<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">55</span>
+          </h1>
+          <p className="text-slate-500 mt-1 sm:mt-2 font-medium text-sm sm:text-base">Your intelligent cash ledger</p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
           <button 
             onClick={handleLogout}
-            className="bg-white text-gray-700 border border-gray-200 px-4 py-3.5 rounded-2xl font-semibold hover:bg-gray-50 flex items-center gap-2 transition-all active:scale-95 justify-center"
+            className="col-span-1 bg-white/70 backdrop-blur-md text-slate-700 border border-white/60 shadow-sm px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-semibold hover:bg-white flex items-center gap-2 transition-all hover:shadow-md active:scale-95 justify-center text-sm sm:text-base"
             title="Sign Out"
           >
-            <LogOut size={20} />
-            <span className="sm:hidden md:inline">Sign Out</span>
+            <LogOut size={18} className="text-slate-400 sm:w-5 sm:h-5" />
+            <span className="inline">Sign Out</span>
           </button>
           <button 
             onClick={handleExport}
             disabled={deposits.length === 0}
-            className="bg-white text-gray-700 border border-gray-200 px-4 py-3.5 rounded-2xl font-semibold hover:bg-gray-50 flex items-center gap-2 transition-all active:scale-95 justify-center disabled:opacity-50"
+            className="col-span-1 bg-white/70 backdrop-blur-md text-slate-700 border border-white/60 shadow-sm px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-semibold hover:bg-white flex items-center gap-2 transition-all hover:shadow-md active:scale-95 justify-center disabled:opacity-50 text-sm sm:text-base"
             title="Download Backup"
           >
-            <Download size={20} />
-            <span className="sm:hidden md:inline">Export</span>
+            <Download size={18} className="text-indigo-500 sm:w-5 sm:h-5" />
+            <span className="inline">Export</span>
           </button>
           <button 
-            onClick={() => setView('enter_cod')} 
-            className="bg-blue-600 text-white px-6 py-3.5 rounded-2xl font-semibold hover:bg-blue-700 flex items-center gap-2 shadow-lg shadow-blue-600/20 transition-all active:scale-95 justify-center"
+            onClick={() => {
+              if (deposits.length > 0) {
+                setExpectedCOD(deposits[0].actualCash);
+              } else {
+                setExpectedCOD('');
+              }
+              setView('enter_cod');
+            }} 
+            className="col-span-2 sm:col-span-1 bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white px-5 sm:px-6 py-3.5 rounded-xl sm:rounded-2xl font-bold hover:shadow-lg hover:shadow-indigo-500/30 flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0 justify-center text-sm sm:text-base"
           >
             <Plus size={20} />
             New Deposit
@@ -277,45 +293,48 @@ export default function App() {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {deposits.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-dashed border-gray-200 shadow-sm">
-            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <History className="h-8 w-8 text-gray-400" />
+          <div className="text-center py-24 bg-white/40 dark:bg-slate-900/40 backdrop-blur-lg rounded-[2.5rem] border border-white/60 dark:border-slate-800 shadow-[0_8px_32px_rgba(0,0,0,0.02)] transition-colors">
+            <div className="w-20 h-20 bg-white dark:bg-slate-800 shadow-xl shadow-indigo-100 dark:shadow-none rounded-3xl flex items-center justify-center mx-auto mb-6 transform rotate-3">
+              <History className="h-10 w-10 text-indigo-400 dark:text-indigo-500" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">No deposits yet</h3>
-            <p className="text-gray-500">Click 'New Deposit' to record your first COD collection.</p>
+            <h3 className="text-2xl font-display font-semibold text-slate-800 dark:text-slate-200 mb-2">No deposits yet</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-lg">Click 'New Deposit' to record your first COD collection.</p>
           </div>
         ) : (
           deposits.map(dep => (
-            <div key={dep.id} className="bg-white p-6 rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+            <div key={dep.id} className="bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl p-5 sm:p-6 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-white dark:border-slate-700/50 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 transition-all hover:shadow-[0_8px_30px_rgba(99,102,241,0.08)] hover:bg-white/90 dark:hover:bg-slate-800 group">
               <div>
-                <div className="text-sm font-medium text-gray-400 mb-1">
-                  {new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(dep.timestamp))}
+                <div className="text-xs sm:text-sm font-medium text-indigo-500/80 dark:text-indigo-400 mb-1.5 sm:mb-2 tracking-wide uppercase">
+                  {new Intl.DateTimeFormat('en-IN', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(dep.timestamp))}
                 </div>
-                <div className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                  Expected: {formatIndianNumber(dep.expectedCOD)}
+                <div className="text-xl sm:text-2xl font-display font-bold text-slate-800 dark:text-white flex items-center gap-2 sm:gap-3">
+                  <span className="text-slate-400 dark:text-slate-500 font-medium text-base sm:text-lg">Target:</span>
+                  {formatIndianNumber(dep.expectedCOD)}
                   {dep.expectedCOD === dep.actualCash && (
-                    <CheckCircle2 size={18} className="text-green-500" />
+                    <div className="bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 p-1 sm:p-1.5 rounded-full shadow-sm">
+                      <CheckCircle2 size={16} className="fill-emerald-100 sm:w-[18px] sm:h-[18px] dark:fill-emerald-500/20" />
+                    </div>
                   )}
                 </div>
               </div>
               
-              <div className="flex flex-wrap gap-6 md:gap-8 bg-gray-50 p-4 rounded-2xl md:bg-transparent md:p-0 md:rounded-none">
-                <div>
-                  <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Cash</div>
-                  <div className="font-semibold text-green-600 text-lg">{formatIndianNumber(dep.actualCash)}</div>
+              <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2.5 sm:gap-4 md:gap-6 bg-slate-50/50 dark:bg-slate-900/50 md:bg-transparent p-3 sm:p-5 md:p-0 rounded-xl sm:rounded-2xl w-full md:w-auto">
+                <div className="bg-white dark:bg-slate-800 md:bg-transparent md:dark:bg-transparent p-3 sm:p-4 md:p-0 rounded-lg sm:rounded-xl shadow-sm md:shadow-none border border-slate-100 dark:border-slate-700 md:border-none md:dark:border-none min-w-[90px] sm:min-w-[100px]">
+                  <div className="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Cash In</div>
+                  <div className="font-display font-bold text-emerald-600 dark:text-emerald-400 text-lg sm:text-xl md:text-2xl">{formatIndianNumber(dep.actualCash)}</div>
                 </div>
                 {dep.onlineAmount !== 0 && (
-                  <div>
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Online</div>
-                    <div className="font-semibold text-blue-600 text-lg">{formatIndianNumber(dep.onlineAmount)}</div>
+                  <div className="bg-white dark:bg-slate-800 md:bg-transparent md:dark:bg-transparent p-3 sm:p-4 md:p-0 rounded-lg sm:rounded-xl shadow-sm md:shadow-none border border-slate-100 dark:border-slate-700 md:border-none md:dark:border-none min-w-[90px] sm:min-w-[100px]">
+                    <div className="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Online</div>
+                    <div className="font-display font-bold text-indigo-600 dark:text-indigo-400 text-lg sm:text-xl md:text-2xl">{formatIndianNumber(dep.onlineAmount)}</div>
                   </div>
                 )}
                 {dep.dueAmount !== 0 && (
-                  <div>
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Due</div>
-                    <div className="font-semibold text-orange-600 text-lg">{formatIndianNumber(dep.dueAmount)}</div>
+                  <div className="bg-white dark:bg-slate-800 md:bg-transparent md:dark:bg-transparent p-3 sm:p-4 md:p-0 rounded-lg sm:rounded-xl shadow-sm md:shadow-none border border-slate-100 dark:border-slate-700 md:border-none md:dark:border-none min-w-[90px] sm:min-w-[100px]">
+                    <div className="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Due</div>
+                    <div className="font-display font-bold text-orange-500 dark:text-orange-400 text-lg sm:text-xl md:text-2xl">{formatIndianNumber(dep.dueAmount)}</div>
                   </div>
                 )}
               </div>
@@ -323,34 +342,39 @@ export default function App() {
           ))
         )}
       </div>
+      <div className="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-400 font-medium">
+        made by ashistyz
+      </div>
     </div>
   );
 
   const renderEnterCOD = () => (
-    <div className="max-w-md mx-auto w-full animate-in zoom-in-95 duration-300">
+    <div className="max-w-xl mx-auto w-full animate-in zoom-in-95 duration-500 pt-4 sm:pt-10">
       <button 
         onClick={() => setView('dashboard')}
-        className="mb-6 flex items-center gap-2 text-gray-500 hover:text-gray-900 font-medium transition-colors"
+        className="mb-6 sm:mb-8 flex items-center gap-2 sm:gap-3 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold transition-colors group"
       >
-        <ArrowLeft size={20} />
+        <div className="p-2 sm:p-2.5 bg-white dark:bg-slate-800 rounded-full shadow-sm group-hover:shadow-md transition-all">
+          <ArrowLeft size={18} />
+        </div>
         Back to Dashboard
       </button>
       
-      <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] p-8 text-center border border-gray-100">
-        <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Wallet size={32} />
+      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_8px_40px_rgba(0,0,0,0.04)] p-6 sm:p-10 text-center border border-white dark:border-slate-800">
+        <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gradient-to-tr from-indigo-500 to-indigo-600 text-white rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-lg shadow-indigo-500/30 transform rotate-3">
+          <Wallet size={32} className="transform -rotate-3 sm:w-9 sm:h-9" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Expected COD</h2>
-        <p className="text-gray-500 mb-8">Enter the exact amount you are supposed to deposit today.</p>
+        <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">Expected COD</h2>
+        <p className="text-slate-500 dark:text-slate-400 mb-8 sm:mb-10 text-base sm:text-lg">Enter the exact target amount to deposit today.</p>
         
-        <div className="relative mb-8">
-          <span className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 text-2xl font-medium">₹</span>
+        <div className="relative mb-8 sm:mb-10 group">
+          <span className="absolute left-6 sm:left-8 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 text-2xl sm:text-3xl font-display font-medium">₹</span>
           <input 
             type="number" 
             value={expectedCOD} 
             onChange={e => setExpectedCOD(e.target.value ? Number(e.target.value) : '')}
             placeholder="0"
-            className="w-full text-5xl font-light text-center py-6 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white outline-none transition-all"
+            className="w-full text-4xl sm:text-6xl font-display font-bold text-center py-6 sm:py-8 bg-slate-50/50 dark:bg-slate-950/50 border-2 border-slate-100 dark:border-slate-800 rounded-2xl sm:rounded-[2rem] focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all text-slate-800 dark:text-slate-200 placeholder:text-slate-200 dark:placeholder:text-slate-700"
             autoFocus
           />
         </div>
@@ -358,7 +382,7 @@ export default function App() {
         <button 
           onClick={() => setView('calculator')} 
           disabled={expectedCOD === '' || Number(expectedCOD) <= 0} 
-          className="w-full py-4 rounded-2xl font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+          className="w-full py-4 sm:py-5 rounded-xl sm:rounded-[1.5rem] font-bold text-base sm:text-lg text-white bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:shadow-lg hover:shadow-indigo-500/30 disabled:opacity-50 disabled:grayscale transition-all hover:-translate-y-0.5 active:translate-y-0"
         >
           Continue to Calculator
         </button>
@@ -367,42 +391,42 @@ export default function App() {
   );
 
   const renderCalculator = () => (
-    <div className="max-w-4xl mx-auto w-full animate-in slide-in-from-right-8 duration-500">
-      <div className="flex items-center justify-between mb-6">
+    <div className="max-w-5xl mx-auto w-full animate-in slide-in-from-right-8 duration-500 pt-2 sm:pt-6 pb-44 md:pb-12">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
         <button 
           onClick={() => setView('enter_cod')}
-          className="flex items-center gap-2 text-gray-500 hover:text-gray-900 font-medium transition-colors bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100"
+          className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 font-semibold transition-colors bg-white/70 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-sm border border-white/60 hover:bg-white hover:shadow-md text-sm sm:text-base"
         >
           <ArrowLeft size={18} />
           Back
         </button>
-        <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-semibold text-sm border border-blue-100 flex items-center gap-2">
-          <span>Expected COD:</span>
-          <span className="text-lg">{formatIndianNumber(Number(expectedCOD))}</span>
+        <div className="bg-indigo-50 text-indigo-700 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-semibold text-sm border border-indigo-100 flex items-center gap-2 shadow-sm shrink-0 w-full sm:w-auto justify-between sm:justify-start">
+          <span className="uppercase tracking-wider text-xs">Target COD:</span>
+          <span className="text-base sm:text-lg font-display font-bold">{formatIndianNumber(Number(expectedCOD))}</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
         {/* Left Column: Calculator Inputs */}
-        <div className="md:col-span-7 bg-white rounded-3xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 md:p-8 border border-gray-100">
-          <div className="flex items-center justify-between mb-8">
+        <div className="md:col-span-7 bg-white/80 backdrop-blur-2xl rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_4px_24px_rgba(0,0,0,0.03)] p-4 sm:p-6 md:p-8 border border-white">
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                <Calculator size={20} />
+              <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-sm border border-indigo-100">
+                <Calculator size={20} className="sm:w-6 sm:h-6" />
               </div>
-              <h1 className="text-xl font-bold tracking-tight text-gray-900">Count Cash</h1>
+              <h1 className="text-xl sm:text-2xl font-display font-bold tracking-tight text-slate-900">Count Cash</h1>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors px-3 py-1.5 rounded-full hover:bg-gray-100"
+              className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors px-3 sm:px-4 py-2 rounded-full hover:bg-indigo-50"
             >
-              <RotateCcw size={16} />
+              <RotateCcw size={14} className="sm:w-4 sm:h-4" />
               Reset
             </button>
           </div>
 
-          <div className="space-y-3">
-            <div className="grid grid-cols-[1fr_1fr_1.5fr] gap-4 px-2 pb-2 border-b border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-wider">
+          <div className="space-y-2 sm:space-y-3">
+            <div className="grid grid-cols-[1fr_1fr_1.5fr] gap-2 sm:gap-4 px-2 sm:px-3 pb-2 sm:pb-3 border-b border-slate-100 text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">
               <div>Note</div>
               <div className="text-center">Count</div>
               <div className="text-right">Amount</div>
@@ -414,10 +438,10 @@ export default function App() {
               return (
                 <div
                   key={den}
-                  className="grid grid-cols-[1fr_1fr_1.5fr] gap-4 items-center p-2 rounded-2xl hover:bg-gray-50 transition-colors group"
+                  className="grid grid-cols-[1fr_1fr_1.5fr] gap-4 items-center p-2 rounded-2xl hover:bg-slate-50 transition-colors group"
                 >
-                  <div className="flex items-center gap-2 font-semibold text-gray-700">
-                    <span className="text-gray-400 text-sm font-normal">₹</span>
+                  <div className="flex items-center gap-2 font-display font-semibold text-slate-700 text-lg">
+                    <span className="text-slate-400 text-base font-medium">₹</span>
                     {den}
                   </div>
                   <div className="relative">
@@ -427,10 +451,10 @@ export default function App() {
                       value={qty === 0 ? '' : qty}
                       onChange={(e) => handleNoteChange(den, e.target.value)}
                       placeholder="0"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-2.5 px-3 text-center text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all placeholder:text-gray-300"
+                      className="w-full bg-slate-50/80 border-2 border-slate-100/50 rounded-2xl py-3 px-4 text-center text-slate-900 font-display font-semibold text-lg focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all placeholder:text-slate-300"
                     />
                   </div>
-                  <div className="text-right font-mono font-medium text-gray-500 group-hover:text-gray-900 transition-colors">
+                  <div className="text-right font-display font-bold text-slate-400 group-hover:text-slate-700 transition-colors text-xl">
                     {amount > 0 ? formatIndianNumber(amount) : '-'}
                   </div>
                 </div>
@@ -440,29 +464,27 @@ export default function App() {
         </div>
 
         {/* Right Column: Summary & Submit */}
-        <div className="md:col-span-5 space-y-6">
-          <div className="bg-white rounded-3xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 md:p-8 sticky top-8 border border-gray-100">
-            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-6">Summary</h2>
+        <div className="md:col-span-5 space-y-6 mt-4 md:mt-0">
+          <div className="bg-white/95 backdrop-blur-3xl rounded-t-[2rem] md:rounded-[2.5rem] shadow-[0_-8px_40px_rgba(0,0,0,0.08)] md:shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-6 md:p-8 fixed bottom-0 left-0 right-0 z-50 md:sticky md:top-8 border-t md:border border-white/80">
+            <h2 className="hidden md:block text-xs font-bold text-slate-400 uppercase tracking-wider mb-8">Summary</h2>
             
-            <div className="space-y-6">
+            <div className="flex flex-row items-center justify-between md:flex-col md:items-start space-y-0 md:space-y-8 mb-4 md:mb-0">
               <div>
-                <div className="flex items-center gap-2 text-gray-500 mb-1">
-                  <IndianRupee size={16} />
-                  <span className="text-sm font-medium">Calculated Cash</span>
+                <div className="flex items-center gap-1 sm:gap-2 text-slate-500 mb-1 sm:mb-2">
+                  <span className="text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-1 sm:gap-1.5"><IndianRupee size={16} className="w-4 h-4 sm:w-auto"/> Calculated Cash</span>
                 </div>
-                <div className={`text-4xl font-bold tracking-tight break-words ${totalAmount === Number(expectedCOD) ? 'text-green-600' : 'text-gray-900'}`}>
+                <div className={`text-4xl sm:text-5xl font-display font-bold tracking-tight break-words transition-colors duration-500 ${totalAmount === Number(expectedCOD) ? 'text-emerald-500' : 'text-slate-900'}`}>
                   {formatIndianNumber(totalAmount)}
                 </div>
               </div>
 
-              <div className="h-px bg-gray-100 w-full"></div>
+              <div className="hidden md:block h-px bg-slate-100 w-full"></div>
 
               <div>
-                <div className="flex items-center gap-2 text-gray-500 mb-1">
-                  <Wallet size={16} />
-                  <span className="text-sm font-medium">Total Notes</span>
+                <div className="flex items-center gap-1 sm:gap-2 text-slate-500 mb-1 sm:mb-2 justify-end md:justify-start">
+                  <span className="text-[10px] sm:text-sm font-semibold tracking-wide flex items-center gap-1 sm:gap-1.5"><Wallet size={16} className="w-3 h-3 sm:w-auto"/> Total Notes</span>
                 </div>
-                <div className="text-2xl font-semibold tracking-tight text-gray-700">
+                <div className="text-xl sm:text-3xl font-display font-bold tracking-tight text-slate-700 text-right md:text-left">
                   {new Intl.NumberFormat('en-IN').format(totalNotes)}
                 </div>
               </div>
@@ -470,15 +492,15 @@ export default function App() {
 
             <button 
               onClick={handleSubmit}
-              className={`w-full mt-8 py-4 rounded-2xl font-bold text-white transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 ${
+              className={`w-full md:mt-10 py-4 sm:py-5 rounded-xl sm:rounded-[1.5rem] font-bold text-base sm:text-lg text-white transition-all shadow-xl hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 ${
                 totalAmount === Number(expectedCOD) 
-                  ? 'bg-green-600 hover:bg-green-700 shadow-green-600/20' 
-                  : 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/20'
+                  ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-emerald-500/20 hover:shadow-emerald-500/40' 
+                  : 'bg-gradient-to-r from-indigo-600 to-fuchsia-600 shadow-indigo-500/20 hover:shadow-indigo-500/40'
               }`}
             >
               {totalAmount === Number(expectedCOD) ? (
                 <>
-                  <CheckCircle2 size={20} />
+                  <CheckCircle2 size={24} className="w-5 h-5 sm:w-6 sm:h-6" />
                   Submit Match
                 </>
               ) : (
@@ -497,53 +519,53 @@ export default function App() {
     const absDiff = Math.abs(diff);
 
     return (
-      <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-        <div className="bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-200">
-          <div className="w-16 h-16 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <AlertCircle size={32} />
+      <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+        <div className="bg-white/95 backdrop-blur-2xl rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 max-w-md w-full shadow-[0_16px_60px_rgba(0,0,0,0.1)] animate-in zoom-in-95 duration-200 border border-white">
+          <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gradient-to-tr from-amber-400 to-orange-500 text-white rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 transform rotate-3 shadow-lg shadow-orange-500/20">
+            <AlertCircle size={32} className="transform -rotate-3 sm:w-10 sm:h-10" />
           </div>
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-2">Amount Mismatch</h3>
+          <h3 className="text-2xl sm:text-3xl font-display font-bold text-center text-slate-900 mb-2">Mismatch</h3>
           
-          <div className="bg-gray-50 rounded-2xl p-4 mb-6 space-y-2 border border-gray-100">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">Expected COD:</span>
-              <span className="font-medium text-gray-900">{formatIndianNumber(Number(expectedCOD))}</span>
+          <div className="bg-slate-50/50 rounded-2xl p-4 mb-6 space-y-3 border border-slate-100">
+            <div className="flex justify-between text-sm sm:text-base font-medium">
+              <span className="text-slate-500">Target COD:</span>
+              <span className="text-slate-900">{formatIndianNumber(Number(expectedCOD))}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">Calculated Cash:</span>
-              <span className="font-medium text-gray-900">{formatIndianNumber(totalAmount)}</span>
+            <div className="flex justify-between text-sm sm:text-base font-medium">
+              <span className="text-slate-500">Calculated:</span>
+              <span className="text-slate-900">{formatIndianNumber(totalAmount)}</span>
             </div>
-            <div className="h-px bg-gray-200 w-full my-2"></div>
-            <div className="flex justify-between text-base font-bold">
-              <span className="text-gray-900">Difference:</span>
-              <span className="text-amber-600">{formatIndianNumber(absDiff)}</span>
+            <div className="h-px bg-slate-200 w-full my-2"></div>
+            <div className="flex justify-between text-base sm:text-lg font-bold">
+              <span className="text-slate-900">Difference:</span>
+              <span className="text-orange-600">{formatIndianNumber(absDiff)}</span>
             </div>
           </div>
 
-          <p className="text-sm font-semibold text-gray-700 mb-4 text-center">
+          <p className="text-sm font-semibold text-slate-600 mb-5 text-center">
             How should we record the remaining {formatIndianNumber(absDiff)}?
           </p>
           
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <button 
               onClick={() => saveDeposit(diff, 0)} 
-              className="py-4 rounded-2xl font-semibold border-2 border-blue-100 text-blue-700 bg-white hover:bg-blue-50 hover:border-blue-200 flex flex-col items-center gap-2 transition-all active:scale-95"
+              className="py-4 rounded-xl sm:rounded-2xl font-bold border-2 border-indigo-100 text-indigo-700 bg-white hover:bg-indigo-50 hover:border-indigo-200 flex flex-col items-center gap-2 transition-all hover:-translate-y-0.5 active:scale-95 hover:shadow-md"
             >
-              <CreditCard size={24} />
+              <CreditCard size={24} className="sm:w-8 sm:h-8" />
               Online
             </button>
             <button 
               onClick={() => saveDeposit(0, diff)} 
-              className="py-4 rounded-2xl font-semibold border-2 border-orange-100 text-orange-700 bg-white hover:bg-orange-50 hover:border-orange-200 flex flex-col items-center gap-2 transition-all active:scale-95"
+              className="py-4 rounded-xl sm:rounded-2xl font-bold border-2 border-orange-100 text-orange-700 bg-white hover:bg-orange-50 hover:border-orange-200 flex flex-col items-center gap-2 transition-all hover:-translate-y-0.5 active:scale-95 hover:shadow-md"
             >
-              <Clock size={24} />
+              <Clock size={24} className="sm:w-8 sm:h-8" />
               Due
             </button>
           </div>
           
           <button 
             onClick={() => setShowModal(false)} 
-            className="w-full py-3.5 rounded-2xl font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors"
           >
             Cancel & Recalculate
           </button>
@@ -553,11 +575,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-gray-900 font-sans p-4 md:p-8 flex justify-center items-start">
-      {view === 'dashboard' && renderDashboard()}
-      {view === 'enter_cod' && renderEnterCOD()}
-      {view === 'calculator' && renderCalculator()}
-      {renderModal()}
-    </div>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 via-slate-50 to-fuchsia-50 text-slate-900 font-sans p-3 sm:p-4 md:p-8 flex justify-center items-start overflow-x-hidden relative">
+      <div className="fixed top-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-indigo-300/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-60 pointer-events-none"></div>
+      <div className="fixed top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-fuchsia-300/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-60 pointer-events-none"></div>
+      
+        <div className="w-full max-w-7xl mx-auto relative z-10">
+          {view === 'dashboard' && renderDashboard()}
+          {view === 'enter_cod' && renderEnterCOD()}
+          {view === 'calculator' && renderCalculator()}
+          {renderModal()}
+        </div>
+      </div>
   );
 }
